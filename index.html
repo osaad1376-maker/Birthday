@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>مفاجأة كيوت 🎀</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap.min.css">
+
+    <style>
+        * {
+            margin: 0%;
+            padding: 0;
+            box-sizing: border-box;
+
+            @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+        }
+
+
+        body {
+            font-family: "sans-serif";
+
+
+            background: linear-gradient(135deg, #fcacbf, #c1e1ff, #ffecd1, #c1ffd1);
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: 400% 400%;
+            /* مهم للتحريك */
+            animation: gradientMove 15s ease infinite;
+            text-align: center;
+            padding: 40px;
+            color: #ff5c8a;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .box {
+            background: white;
+            border-radius: 30px;
+            padding: 35px;
+            max-width: 420px;
+            margin: auto;
+            box-shadow: 0 10px 30px rgba(255, 92, 138, 0.3);
+            position: relative;
+            z-index: 2;
+            font-size: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 20px;
+            border: 2px solid #ffb3c6;
+            width: 80%;
+            font-size: 1em;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background: #ff85a2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff5c8a;
+            transform: scale(1.2) rotate(-5deg);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .heart,
+        .star {
+            position: fixed;
+            bottom: -20px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.7;
+        }
+
+        .star {
+            color: #ffeaa7;
+            font-size: 15px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        #surprise {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ff5c8a;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        #surprise.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- شاشة الباسوورد -->
+    <div class="box show" id="loginBox">
+        <h2>🔐 مفاجأة في انتظارك 🙈 🎀</h2>
+        <p>يلا اكتبي الباسوورد بسرعة 👀💗</p>
+        <input type="password" id="password" placeholder="الباسوورد هنا">
+        <br>
+        <button onclick="checkPassword()">دخول ✨</button>
+        <p id="error" style="color:#ff4d6d;"></p>
+    </div>
+
+    <!-- محتوى عيد الميلاد -->
+    <div class="box hidden" id="contentBox">
+        <h1>❤️My Dear ❤️</h1>
+        <h1 class="text-primary fs-2">🎂 عيد ميلاد سعيد يا بسبوستي 🎀</h1>
+        <p>
+            كل سنة وإنتِ طيبة يا بسبوستي 🤍🎂<br>
+            كل سنة وإنتِ أحلى حاجة في حياتي،<br>
+            كل سنة وانتِ قلبي يحبيبي😘🥰💌 💕<br>
+            ربنا يخليكي ليا دايمًا،<br>
+            ويجعل أيامك كلها حب وفرح زي قلبك
+        </p>
+
+        <p id="countdown"></p>
+
+        <button onclick="showSurprise()">دوسي هنا 👀💖</button>
+
+        <div id="surprise">
+            🧁💗 إنتِ مش بس حبيبتي،<br>
+            إنتِ الأمان، والونس، والحاجة الحلوة اللي بشكر ربنا عليها كل يوم 💗🧁
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "16/2"; // غير الباسوورد هنا
+
+        function checkPassword() {
+            const input = document.getElementById("password").value;
+            const error = document.getElementById("error");
+
+            if (input === correctPassword) {
+                document.getElementById("loginBox").classList.add("hidden");
+                const content = document.getElementById("contentBox");
+                content.classList.remove("hidden");
+                setTimeout(() => content.classList.add("show"), 100);
+                checkBirthday();
+                startEffects();
+            } else {
+                error.innerText = "غلط 🙈 جرّبي تاني";
+            }
+        }
+
+        function showSurprise() {
+            const s = document.getElementById("surprise");
+            s.classList.add("show");
+        }
+
+        function checkBirthday() {
+            const today = new Date();
+            const isBirthday =
+                today.getDate() === 16 &&
+                today.getMonth() === 1 && // فبراير = 1
+                today.getFullYear() === 2026;
+
+            const text = document.getElementById("countdown");
+
+            if (isBirthday) {
+                text.innerText = "🎉 النهارده عيد ميلادك يا أجمل هدية 🎂💗";
+            } else {
+                text.innerText = "⏳ استني شوية… المفاجأة لسه وقتها مجاش 🎀";
+                document.getElementById("surprise").style.display = "none";
+            }
+        }
+
+        function startEffects() {
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.className = "heart";
+                heart.innerText = "💗";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = (15 + Math.random() * 25) + "px";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 400);
+
+            setInterval(() => {
+                const star = document.createElement("div");
+                star.className = "star";
+                star.innerText = "✨";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.fontSize = (10 + Math.random() * 15) + "px";
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 6000);
+            }, 600);
+        }
+    </script>
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js">
+
+    </script>
+
+</body>
+
+</html>
